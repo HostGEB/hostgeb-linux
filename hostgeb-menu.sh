@@ -2,48 +2,55 @@
 
 CYAN='\033[1;36m'
 NC='\033[0m'
+RED='\033[1;31m'
+YELLOW='\033[1;33m'
+BOLD='\033[1m'
+RESET='\033[0m'
 
-# Menü başlığı ve seçenekler
-echo -e "${CYAN}========== HostGeb - Linux Yönetim Scripti ==========${NC}"
-echo "1. Plesk Kurulumu"
-echo "2. cPanel Kurulumu"
-echo "3. DirectAdmin Kurulumu"
-echo "4. CSF Algılama Modu Aç"
-echo "5. CSF Algılama Modu Kapat"
-echo "6. CSF Kurulum ve Ayarlar"
-echo "7. Litespeed Ayarlar"
-echo "8. SSH Ayarlar"
-echo "9. Swap Performans Kernel"
-echo "10. CSF Katı DDoS Ayarları"
-echo "11. Gerçek Disk Kullanımını Gör"
-echo "12. Boş RAM Durumunu Gör"
-echo "13. Apache Yeniden Başlat"
-echo "14. Önbellek Temizleme"
-echo "15. Let's Encrypt SSL Kurulumu"
-echo "16. MySQL/MariaDB Yedeği Alma"
-echo "17. Nginx Yeniden Başlat"
-echo "18. Kernel Güncelleme"
-echo "19. Postfix ve Dovecot Ayarları"
-echo "20. Otomatik Yedekleme Planlama"
-echo "0. Çıkış"
+# Menü başlığı ve separator
+clear
+echo -e "${BOLD}${CYAN}========================================="
+echo -e "          HostGeb Yönetim Scripti           "
+echo -e "=========================================${NC}"
+echo
+
+echo -e "${BOLD}${YELLOW}1.${NC} Plesk Kurulumu"
+echo -e "${BOLD}${YELLOW}2.${NC} cPanel Kurulumu"
+echo -e "${BOLD}${YELLOW}3.${NC} DirectAdmin Kurulumu"
+echo -e "${BOLD}${YELLOW}4.${NC} CSF Algılama Modu Aç"
+echo -e "${BOLD}${YELLOW}5.${NC} CSF Algılama Modu Kapat"
+echo -e "${BOLD}${YELLOW}6.${NC} CSF Kurulum ve Ayarlar"
+echo -e "${BOLD}${YELLOW}7.${NC} Litespeed Ayarlar"
+echo -e "${BOLD}${YELLOW}8.${NC} SSH Ayarlar"
+echo -e "${BOLD}${YELLOW}9.${NC} Swap Performans Kernel"
+echo -e "${BOLD}${YELLOW}10.${NC} CSF Katı DDoS Ayarları"
+echo -e "${BOLD}${YELLOW}11.${NC} Gerçek Disk Kullanımını Gör"
+echo -e "${BOLD}${YELLOW}12.${NC} Boş RAM Durumunu Gör"
+echo -e "${BOLD}${YELLOW}13.${NC} Apache Yeniden Başlat"
+echo -e "${BOLD}${YELLOW}14.${NC} Önbellek Temizleme"
+echo -e "${BOLD}${YELLOW}15.${NC} Let's Encrypt SSL Kurulumu"
+echo -e "${BOLD}${YELLOW}16.${NC} MySQL/MariaDB Yedeği Alma"
+echo -e "${BOLD}${YELLOW}17.${NC} Nginx Yeniden Başlat"
+echo -e "${BOLD}${YELLOW}18.${NC} Kernel Güncelleme"
+echo -e "${BOLD}${YELLOW}19.${NC} Postfix ve Dovecot Ayarları"
+echo -e "${BOLD}${YELLOW}20.${NC} Otomatik Yedekleme Planlama"
+echo -e "${BOLD}${RED}0.${NC} Çıkış"
+echo
+
 echo -n "Seçiminizi girin: "
-
 read secim
 
 case $secim in
   1)
     echo -e "${CYAN}Plesk Kurulumu Başlatılıyor...${NC}"
-    # Plesk otomatik kurulum scripti
     curl -fsSL https://installer.plesk.com/one-click-installer | sh
     ;;
   2)
     echo -e "${CYAN}cPanel Kurulumu Başlatılıyor...${NC}"
-    # cPanel otomatik kurulum scripti
     cd /home && curl -o latest -L https://securedownloads.cpanel.net/latest && sh latest
     ;;
   3)
     echo -e "${CYAN}DirectAdmin Kurulumu Başlatılıyor...${NC}"
-    # DirectAdmin otomatik kurulum scripti
     wget -O setup.sh https://www.directadmin.com/setup.sh && chmod +x setup.sh && ./setup.sh auto
     ;;
   4)
@@ -116,14 +123,14 @@ case $secim in
   20)
     echo -e "${CYAN}Otomatik Yedekleme Planlanıyor...${NC}"
     crontab -l > mycron
-    echo "0 2 * * * /usr/bin/mysqldump -u root -p[şifre] [veritabani_adi] > /var/backups/db_$(date +\\%F).sql" >> mycron
+    echo "0 2 * * * /usr/bin/mysqldump -u root -p[şifre] [veritabani_adi] > /var/backups/db_$(date +\%F).sql" >> mycron
     crontab mycron && rm mycron
     ;;
   0)
-    echo -e "${CYAN}Çıkış Yapılıyor...${NC}"
+    echo -e "${RED}Çıkış Yapılıyor...${NC}"
     exit
     ;;
   *)
-    echo -e "${CYAN}Geçersiz Seçim!${NC}"
+    echo -e "${RED}Geçersiz Seçim!${NC}"
     ;;
 esac
